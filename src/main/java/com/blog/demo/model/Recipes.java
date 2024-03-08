@@ -1,5 +1,7 @@
 package com.blog.demo.model;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,6 +22,12 @@ public class Recipes {
 
     @Column(name = "name")
     private String name;
+
+    @Column(name = "ingredients")
+    private List<String> ingredients;
+
+    @Column(name = "instructions")
+    private List<String> instructions;
 
     @Column(name = "prepTimeMinues")
     private int prepTimeMinutes;
@@ -51,6 +59,5 @@ public class Recipes {
     @Column(name = "reviewCount")
     private int reviewCount;
 
-    
 
 }
