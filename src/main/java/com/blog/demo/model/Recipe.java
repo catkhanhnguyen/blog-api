@@ -7,6 +7,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,10 +32,10 @@ public class Recipe {
     @Column(name = "instructions")
     private List<String> instructions;
 
-    @Column(name = "prepTimeMinues")
+    @Column(name = "prep_time_minutes")
     private int prepTimeMinutes;
 
-    @Column(name = "cookTimeMinutes")
+    @Column(name = "cook_time_minutes")
     private int cookTimeMinutes;
 
     @Column(name = "servings")
@@ -44,20 +47,30 @@ public class Recipe {
     @Column(name = "cuisine")
     private String cuisine;
 
-    @Column(name = "caloriesPerServing")
+    @Column(name = "calories_per_serving")
     private int caloriesPerServing;
 
-    @Column(name = "userId")
+    @Column(name = "user_id")
     private long userId;
 
     @Column(name = "image")
     private String image;
 
-    @Column(name = "raing")
+    @Column(name = "rating")
     private float rating;
 
-    @Column(name = "reviewCount")
+    @Column(name = "review_count")
     private int reviewCount;
 
+    @ManyToMany
+    @JoinTable(name = "recipe_tags",
+               joinColumns = @JoinColumn(name = "recipe_id"),
+               inverseJoinColumns = @JoinColumn(name = "tag_id"))
+    private List<Tag> tags;
 
+    @ManyToMany
+    @JoinTable(name = "recipe_meal_types",
+               joinColumns = @JoinColumn(name = "recipe_id"),
+               inverseJoinColumns = @JoinColumn(name = "meal_type_id"))
+    private List<MealType> mealTypes;
 }
