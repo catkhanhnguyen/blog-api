@@ -74,3 +74,5 @@ public class Recipe {
                inverseJoinColumns = @JoinColumn(name = "meal_type_id"))
     private List<MealType> mealTypes;
 }
+
+// https://www.youtube.com/watch?v=RHZgllzbjVQ
