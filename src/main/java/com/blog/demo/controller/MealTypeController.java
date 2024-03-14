@@ -27,10 +27,13 @@ public class MealTypeController {
         return new ResponseEntity<>(mealTypeService.getMealTypeById(id), HttpStatus.OK);
     }
 
-    @PostMapping
+    @PostMapping()
     public ResponseEntity<MealType> createMealType(@RequestBody MealType mealType) {
         MealType createdMealType = mealTypeService.createMealType(mealType);
-        return new ResponseEntity<>(createdMealType, HttpStatus.CREATED);
+        if (createdMealType != null) {
+            return new ResponseEntity<>(createdMealType, HttpStatus.CREATED);
+        }
+        return new ResponseEntity<>(HttpStatus.CONFLICT);
     }
 
     @PutMapping("/{id}")
@@ -39,7 +42,7 @@ public class MealTypeController {
         if (updatedMealType != null) {
             return new ResponseEntity<>(updatedMealType, HttpStatus.OK);
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @DeleteMapping("/{id}")
@@ -51,7 +54,7 @@ public class MealTypeController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping
+    @GetMapping()
     public ResponseEntity<List<MealType>> getAllMealTypes() {
         List<MealType> mealTypes = mealTypeService.getAllMealTypes();
         return new ResponseEntity<>(mealTypes, HttpStatus.OK);

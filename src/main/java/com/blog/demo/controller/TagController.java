@@ -29,7 +29,11 @@ public class TagController {
 
     @PostMapping()
     public ResponseEntity<Tag> createTag(@RequestBody Tag tag) {
-        return new ResponseEntity<>(tagService.createTag(tag), HttpStatus.CREATED);
+        Tag tagCreate = tagService.createTag(tag);
+        if (tagCreate != null) {
+            return new ResponseEntity<>(tagCreate, HttpStatus.CREATED);
+        }
+        return new ResponseEntity<>(HttpStatus.CONFLICT);
     }
 
     @PutMapping("/{id}")
@@ -38,7 +42,7 @@ public class TagController {
         if (updatedTag != null) {
             return new ResponseEntity<>(updatedTag, HttpStatus.OK);
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @DeleteMapping("/{id}")

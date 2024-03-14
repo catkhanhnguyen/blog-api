@@ -7,4 +7,5 @@ import com.blog.demo.model.MealType;
 
 @Repository
 public interface IMealTypeRepository extends JpaRepository<MealType, Long> {
+    MealType findByName(String name);
 }

@@ -18,22 +18,27 @@ public class TagServiceImpl implements ITagService {
 
     @Override
     public Tag createTag(Tag tag) {
-        return tagRepository.save(tag);
+        Tag existedTag = tagRepository.findByName(tag.getName());
+        if (existedTag == null) {
+            return tagRepository.save(tag);
+        }
+        return null;
     }
 
     @Override
     public Tag updateTag(long id, Tag tag) {
-        // if (tagRepository.existsById(id)) {
-        //     tag.setId(id);
-        //     return tagRepository.save(tag);
-        // }
-        // return null;
-        Tag existTag = getTagById(id);
-        if(existTag != null){
-            existTag.setName(tag.getName());
-            return existTag;
+        if (tagRepository.existsById(id)) {
+            tag.setId(id);
+            return tagRepository.save(tag);
         }
         return null;
+        // Tag existTag = getTagById(id);
+        // if(existTag != null){
+        //     existTag.setName(tag.getName());
+        //     tagRepository.save(existTag);
+        //     return existTag;
+        // }
+        // return null;
     }
 
     @Override

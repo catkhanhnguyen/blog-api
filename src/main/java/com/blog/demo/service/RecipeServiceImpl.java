@@ -21,7 +21,8 @@ public class RecipeServiceImpl implements IRecipeServiceImpl {
 
     @Override
     public Recipe getRecipeById(long id) {
-        return recipeRepository.findById(id).orElse(null);
+        Recipe recipe =  recipeRepository.findById(id).orElse(null);
+        return recipe;
     }
 
     @Override

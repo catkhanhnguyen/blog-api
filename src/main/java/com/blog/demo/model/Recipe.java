@@ -27,10 +27,10 @@ public class Recipe {
     private String name;
 
     @Column(name = "ingredients")
-    private List<String> ingredients;
+    private String ingredients;
 
     @Column(name = "instructions")
-    private List<String> instructions;
+    private String instructions;
 
     @Column(name = "prep_time_minutes")
     private int prepTimeMinutes;
@@ -75,4 +75,3 @@ public class Recipe {
     private List<MealType> mealTypes;
 }
 
-// https://www.youtube.com/watch?v=RHZgllzbjVQ

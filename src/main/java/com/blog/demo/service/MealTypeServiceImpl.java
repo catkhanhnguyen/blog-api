@@ -18,21 +18,18 @@ public class MealTypeServiceImpl implements IMealTypeService {
 
     @Override
     public MealType createMealType(MealType mealType) {
-        return mealTypeRepository.save(mealType);
+        MealType mealTypeCreate = mealTypeRepository.findByName(mealType.getName());
+        if (mealTypeCreate == null) {
+            return mealTypeRepository.save(mealType);
+        }
+        return null;
     }
 
     @Override
     public MealType updateMealType(long id, MealType mealType) {
-        // if(mealTypeRepository.existsById(id)) {
-        //     mealType.setId(id);
-        //     return mealTypeRepository.save(mealType);
-        // }
-        // return null;
-
-        MealType existedMealType = getMealTypeById(id);
-        if (existedMealType != null) {
-            existedMealType.setName(mealType.getName());
-            return existedMealType;
+        if(mealTypeRepository.existsById(id)) {
+            mealType.setId(id);
+            return mealTypeRepository.save(mealType);
         }
         return null;
     }

@@ -25,7 +25,7 @@ public class RecipeController {
     @Autowired
     private RecipeServiceImpl recipeService;
 
-    @GetMapping
+    @GetMapping()
     public ResponseEntity<List<Recipe>> getAllRecipes() {
         return new ResponseEntity<>(recipeService.getAllRecipes(), HttpStatus.OK);
     }
@@ -35,7 +35,7 @@ public class RecipeController {
         return new ResponseEntity<>(recipeService.getRecipeById(id), HttpStatus.OK);
     }
 
-    @PostMapping
+    @PostMapping()
     public ResponseEntity<Recipe> createRecipe(@RequestBody Recipe recipe) {
         return new ResponseEntity<>(recipeService.createRecipe(recipe), HttpStatus.CREATED);
     }
@@ -45,7 +45,7 @@ public class RecipeController {
         if (getRecipeById(id) != null) {
             return new ResponseEntity<>(recipeService.updateRecipe(id, recipe), HttpStatus.OK);
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @DeleteMapping("/{id}")
