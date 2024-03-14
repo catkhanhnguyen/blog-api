@@ -6,14 +6,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.blog.demo.model.Recipe;
-import com.blog.demo.service.RecipeService;
+import com.blog.demo.service.RecipeServiceImpl;
 
 @RestController
 @RequestMapping("/recipes")
 public class RecipeController {
     
     @Autowired
-    private RecipeService recipeService;
+    private RecipeServiceImpl recipeService;
 
     @GetMapping("/")
     public List<Recipe> getAllRecipes() {

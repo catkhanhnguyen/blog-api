@@ -19,4 +19,5 @@ public class TagController {
     public List<Tag> getAllTags() {
         return tagService.getAllTags();
     }
+
 }

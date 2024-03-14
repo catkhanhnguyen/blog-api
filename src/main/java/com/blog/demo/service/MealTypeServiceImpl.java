@@ -10,6 +10,30 @@ import com.blog.demo.repository.MealTypeRepository;
 public class MealTypeServiceImpl implements IMealTypeService {
     @Autowired
     private MealTypeRepository mealTypeRepository;
+    
+    @Override
+    public MealType getMealTypeById(long id) {
+        return mealTypeRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public MealType createMealType(MealType mealType) {
+        return mealTypeRepository.save(mealType);
+    }
+
+    @Override
+    public MealType updateMealType(long id, MealType mealType) {
+        if(mealTypeRepository.existsById(id)) {
+            mealType.setId(id);
+            return mealTypeRepository.save(mealType);
+        }
+        return null;
+    }
+
+    @Override
+    public void deleteMealType(long id) {
+        mealTypeRepository.deleteById(id);
+    }
 
     @Override
     public List<MealType> getAllMealTypes() {

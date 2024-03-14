@@ -9,7 +9,7 @@ import com.blog.demo.model.MealType;
 import com.blog.demo.repository.RecipeRepository;
 
 @Service
-public class RecipeService implements IRecipeServiceImpl {
+public class RecipeServiceImpl implements IRecipeServiceImpl {
 
     @Autowired
     private RecipeRepository recipeRepository;
@@ -24,7 +24,6 @@ public class RecipeService implements IRecipeServiceImpl {
         return recipeRepository.findById(id).orElse(null);
     }
 
-    @SuppressWarnings("null")
     @Override
     public Recipe createRecipe(Recipe recipe) {
         return recipeRepository.save(recipe);
