@@ -2,9 +2,8 @@ package com.blog.demo.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
-import com.blog.demo.model.MealType;
+import com.blog.demo.model.Tag;
 
 @Repository
-public interface MealTypeRepository extends JpaRepository<MealType, Long> {
+public interface ITagRepository extends JpaRepository<Tag, Long> {
 }

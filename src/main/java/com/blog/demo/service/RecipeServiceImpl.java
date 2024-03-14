@@ -6,13 +6,13 @@ import org.springframework.stereotype.Service;
 import com.blog.demo.model.Recipe;
 import com.blog.demo.model.Tag;
 import com.blog.demo.model.MealType;
-import com.blog.demo.repository.RecipeRepository;
+import com.blog.demo.repository.IRecipeRepository;
 
 @Service
 public class RecipeServiceImpl implements IRecipeServiceImpl {
 
     @Autowired
-    private RecipeRepository recipeRepository;
+    private IRecipeRepository recipeRepository;
 
     @Override
     public List<Recipe> getAllRecipes() {
@@ -31,9 +31,10 @@ public class RecipeServiceImpl implements IRecipeServiceImpl {
 
     @Override
     public Recipe updateRecipe(long id, Recipe recipe) {
-        if (recipeRepository.existsById(id)) {
-            recipe.setId(id);
-            return recipeRepository.save(recipe);
+        Recipe existedRecipe = getRecipeById(id);
+        if (existedRecipe != null) {
+            existedRecipe.setName(recipe.getName());
+            return existedRecipe;
         }
         return null;
     }

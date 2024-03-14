@@ -8,7 +8,7 @@ import com.blog.demo.model.Tag;
 import com.blog.demo.model.MealType;
 
 @Repository
-public interface RecipeRepository extends JpaRepository<Recipe, Long> {
+public interface IRecipeRepository extends JpaRepository<Recipe, Long> {
 
     List<Recipe> findByTags(Tag tag);
 

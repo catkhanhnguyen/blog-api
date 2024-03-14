@@ -4,12 +4,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.blog.demo.model.Tag;
-import com.blog.demo.repository.TagRepository;
+import com.blog.demo.repository.ITagRepository;
 
 @Service
 public class TagServiceImpl implements ITagService {
     @Autowired
-    private TagRepository tagRepository;
+    private ITagRepository tagRepository;
 
     @Override
     public Tag getTagById(long id) {
@@ -23,9 +23,15 @@ public class TagServiceImpl implements ITagService {
 
     @Override
     public Tag updateTag(long id, Tag tag) {
-        if (tagRepository.existsById(id)) {
-            tag.setId(id);
-            return tagRepository.save(tag);
+        // if (tagRepository.existsById(id)) {
+        //     tag.setId(id);
+        //     return tagRepository.save(tag);
+        // }
+        // return null;
+        Tag existTag = getTagById(id);
+        if(existTag != null){
+            existTag.setName(tag.getName());
+            return existTag;
         }
         return null;
     }

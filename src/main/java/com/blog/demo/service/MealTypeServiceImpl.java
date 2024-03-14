@@ -4,12 +4,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.blog.demo.model.MealType;
-import com.blog.demo.repository.MealTypeRepository;
+import com.blog.demo.repository.IMealTypeRepository;
 
 @Service
 public class MealTypeServiceImpl implements IMealTypeService {
     @Autowired
-    private MealTypeRepository mealTypeRepository;
+    private IMealTypeRepository mealTypeRepository;
     
     @Override
     public MealType getMealTypeById(long id) {
@@ -23,9 +23,16 @@ public class MealTypeServiceImpl implements IMealTypeService {
 
     @Override
     public MealType updateMealType(long id, MealType mealType) {
-        if(mealTypeRepository.existsById(id)) {
-            mealType.setId(id);
-            return mealTypeRepository.save(mealType);
+        // if(mealTypeRepository.existsById(id)) {
+        //     mealType.setId(id);
+        //     return mealTypeRepository.save(mealType);
+        // }
+        // return null;
+
+        MealType existedMealType = getMealTypeById(id);
+        if (existedMealType != null) {
+            existedMealType.setName(mealType.getName());
+            return existedMealType;
         }
         return null;
     }

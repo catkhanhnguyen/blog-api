@@ -24,12 +24,7 @@ public class MealTypeController {
 
     @GetMapping("/{id}")
     public ResponseEntity<MealType> getMealTypeById(@PathVariable("id") long id) {
-        MealType mealType = mealTypeService.getMealTypeById(id);
-        if (mealType != null) {
-            return new ResponseEntity<>(mealType, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        return new ResponseEntity<>(mealTypeService.getMealTypeById(id), HttpStatus.OK);
     }
 
     @PostMapping
@@ -49,12 +44,15 @@ public class MealTypeController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteMealType(@PathVariable("id") long id) {
-        mealTypeService.deleteMealType(id);
+        if (getMealTypeById(id) != null) {
+            mealTypeService.deleteMealType(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping
-    public ResponseEntity<List<MealType>> getAllMealType() {
+    public ResponseEntity<List<MealType>> getAllMealTypes() {
         List<MealType> mealTypes = mealTypeService.getAllMealTypes();
         return new ResponseEntity<>(mealTypes, HttpStatus.OK);
     }
