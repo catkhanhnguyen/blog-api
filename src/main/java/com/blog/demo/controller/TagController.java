@@ -47,11 +47,11 @@ public class TagController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTag(@PathVariable("id") long id) {
-        if (getTagById(id) != null) {
+        if (tagService.getTagById(id) != null) {
             tagService.deleteTag(id);
             return new ResponseEntity<>(HttpStatus.OK);
         }
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @GetMapping()

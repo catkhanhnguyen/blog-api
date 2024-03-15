@@ -47,11 +47,11 @@ public class MealTypeController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteMealType(@PathVariable("id") long id) {
-        if (getMealTypeById(id) != null) {
+        if (mealTypeService.getMealTypeById(id) != null) {
             mealTypeService.deleteMealType(id);
             return new ResponseEntity<>(HttpStatus.OK);
         }
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @GetMapping()
