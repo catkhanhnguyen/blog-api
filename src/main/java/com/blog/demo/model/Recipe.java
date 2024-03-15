@@ -7,8 +7,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
@@ -63,15 +61,10 @@ public class Recipe {
     private int reviewCount;
 
     @ManyToMany
-    @JoinTable(name = "recipe_tags",
-               joinColumns = @JoinColumn(name = "recipe_id"),
-               inverseJoinColumns = @JoinColumn(name = "tag_id"))
     private List<Tag> tags;
 
     @ManyToMany
-    @JoinTable(name = "recipe_meal_types",
-               joinColumns = @JoinColumn(name = "recipe_id"),
-               inverseJoinColumns = @JoinColumn(name = "meal_type_id"))
     private List<MealType> mealTypes;
+
 }
 

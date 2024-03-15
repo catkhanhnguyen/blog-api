@@ -2,6 +2,7 @@ package com.blog.demo.service;
 
 import java.util.List;
 
+import com.blog.demo.dto.RecipeRequest;
 import com.blog.demo.model.MealType;
 import com.blog.demo.model.Recipe;
 import com.blog.demo.model.Tag;
@@ -11,9 +12,9 @@ public interface IRecipeServiceImpl {
 
     Recipe getRecipeById(long id);
 
-    Recipe createRecipe(Recipe recipe);
+    Recipe createRecipe(RecipeRequest request);
 
-    Recipe updateRecipe(long id, Recipe recipe);
+    Recipe updateRecipe(long id, RecipeRequest request);
 
     void deleteRecipe(long id);
 
