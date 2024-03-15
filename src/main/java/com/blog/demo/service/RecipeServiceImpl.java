@@ -3,6 +3,8 @@ package com.blog.demo.service;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import com.blog.demo.model.Recipe;
 import com.blog.demo.model.Tag;
@@ -25,8 +27,8 @@ public class RecipeServiceImpl implements IRecipeServiceImpl {
     private IMealTypeRepository mealTypeRepository;
 
     @Override
-    public List<Recipe> getAllRecipes() {
-        return recipeRepository.findAll();
+    public Page<Recipe> getAllRecipes(Pageable pageable) {
+        return recipeRepository.findAll(pageable);
     }
 
     @Override
@@ -114,7 +116,7 @@ public class RecipeServiceImpl implements IRecipeServiceImpl {
                 request.getMealTypeIds() == null) {
             return null;
         }
-        
+
         Recipe existedRecipe = getRecipeById(id);
         if (existedRecipe != null) {
             existedRecipe.setName(request.getName());
