@@ -111,7 +111,7 @@ public class RecipeServiceImpl implements IRecipeServiceImpl {
             existedRecipe.setTags(tags);
             existedRecipe.setMealTypes(mealTypes);
 
-            return existedRecipe;
+            return recipeRepository.save(existedRecipe);
         }
         return null;
     }
