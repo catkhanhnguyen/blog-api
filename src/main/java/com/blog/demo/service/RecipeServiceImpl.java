@@ -37,6 +37,24 @@ public class RecipeServiceImpl implements IRecipeServiceImpl {
 
     @Override
     public Recipe createRecipe(RecipeRequest request) {
+        if (request.getName() == null &&
+                request.getIngredients() == null &&
+                request.getInstructions() == null &&
+                request.getPrepTimeMinutes() == 0 &&
+                request.getCookTimeMinutes() == 0 &&
+                request.getServings() == 0 &&
+                request.getDifficulty() == null &&
+                request.getCuisine() == null &&
+                request.getCaloriesPerServing() == 0 &&
+                request.getUserId() == 0 &&
+                request.getImage() == null &&
+                request.getRating() == 0 &&
+                request.getReviewCount() == 0 &&
+                request.getTagIds() == null &&
+                request.getMealTypeIds() == null) {
+            return null;
+        }
+
         Recipe recipe = new Recipe();
 
         recipe.setName(request.getName());
@@ -55,11 +73,14 @@ public class RecipeServiceImpl implements IRecipeServiceImpl {
 
         List<Tag> tags = new ArrayList<>();
         for (Long tagId : request.getTagIds()) {
-            Tag tag = tagRepository.findById(tagId).orElse(null);
-            if (tag != null) {
-                tags.add(tag);
+            if (tagId != null) {
+                Tag tag = tagRepository.findById(tagId).orElse(null);
+                if (tag != null) {
+                    tags.add(tag);
+                }
             }
         }
+
         List<MealType> mealTypes = new ArrayList<>();
         for (Long mealTypeId : request.getMealTypeIds()) {
             MealType mealType = mealTypeRepository.findById(mealTypeId).orElse(null);
@@ -76,6 +97,24 @@ public class RecipeServiceImpl implements IRecipeServiceImpl {
 
     @Override
     public Recipe updateRecipe(long id, RecipeRequest request) {
+        if (request.getName() == null &&
+                request.getIngredients() == null &&
+                request.getInstructions() == null &&
+                request.getPrepTimeMinutes() == 0 &&
+                request.getCookTimeMinutes() == 0 &&
+                request.getServings() == 0 &&
+                request.getDifficulty() == null &&
+                request.getCuisine() == null &&
+                request.getCaloriesPerServing() == 0 &&
+                request.getUserId() == 0 &&
+                request.getImage() == null &&
+                request.getRating() == 0 &&
+                request.getReviewCount() == 0 &&
+                request.getTagIds() == null &&
+                request.getMealTypeIds() == null) {
+            return null;
+        }
+        
         Recipe existedRecipe = getRecipeById(id);
         if (existedRecipe != null) {
             existedRecipe.setName(request.getName());

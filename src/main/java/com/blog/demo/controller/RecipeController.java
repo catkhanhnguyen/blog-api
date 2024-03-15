@@ -38,20 +38,27 @@ public class RecipeController {
 
     @PostMapping()
     public ResponseEntity<Recipe> createRecipe(@RequestBody RecipeRequest request) {
-        return new ResponseEntity<>(recipeService.createRecipe(request), HttpStatus.CREATED);
+        Recipe createRecipe = recipeService.createRecipe(request);
+        if (createRecipe != null) {
+            return new ResponseEntity<>(createRecipe, HttpStatus.CREATED);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Recipe> updateRecipe(@PathVariable("id") long id, @RequestBody RecipeRequest request) {
-        if (getRecipeById(id) != null) {
-            return new ResponseEntity<>(recipeService.updateRecipe(id, request), HttpStatus.OK);
+        if (recipeService.getRecipeById(id) != null) {
+            Recipe recipeUpdate = recipeService.updateRecipe(id, request);
+            if (recipeUpdate != null) {
+                return new ResponseEntity<>(recipeUpdate, HttpStatus.OK);
+            }
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteRecipe(@PathVariable("id") long id) {
-        if (getRecipeById(id) != null) {
+        if (recipeService.getRecipeById(id) != null) {
             recipeService.deleteRecipe(id);
             return new ResponseEntity<>(HttpStatus.OK);
         }

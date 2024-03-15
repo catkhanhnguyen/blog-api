@@ -33,7 +33,7 @@ public class MealTypeController {
         if (createdMealType != null) {
             return new ResponseEntity<>(createdMealType, HttpStatus.CREATED);
         }
-        return new ResponseEntity<>(HttpStatus.CONFLICT);
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @PutMapping("/{id}")

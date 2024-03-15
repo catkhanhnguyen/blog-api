@@ -33,7 +33,7 @@ public class TagController {
         if (tagCreate != null) {
             return new ResponseEntity<>(tagCreate, HttpStatus.CREATED);
         }
-        return new ResponseEntity<>(HttpStatus.CONFLICT);
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @PutMapping("/{id}")
