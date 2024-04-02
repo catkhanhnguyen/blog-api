@@ -22,14 +22,14 @@ import com.blog.demo.service.UserInfoService;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-    
+
     @Autowired
     private JwtFilter jwtFilter;
-    
+
     @Bean
-	public UserDetailsService userDetailsService() { 
-		return new UserInfoService();
-	} 
+    public UserDetailsService userDetailsService() {
+        return new UserInfoService();
+    }
 
     @Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception { 
@@ -39,20 +39,22 @@ public class SecurityConfig {
                         .authorizeHttpRequests(request -> request.requestMatchers(jwtFilter.getIgnoreCsrfAntMatchers()).permitAll())
 
                         .authorizeHttpRequests(requests -> requests.requestMatchers("/register").hasAnyAuthority(Role.SYS_ADMIN.toString()))
+                        .authorizeHttpRequests(requests -> requests.requestMatchers("/refresh-token").hasAnyAuthority(Role.SYS_ADMIN.toString(), Role.ADMIN.toString()))
 
-                        .authorizeHttpRequests(requests -> requests.requestMatchers(HttpMethod.GET,"/recipes").hasAnyAuthority(Role.SYS_ADMIN.toString(), Role.ADMIN.toString()))
-                        .authorizeHttpRequests(requests -> requests.requestMatchers(HttpMethod.GET,"/recipes/**").hasAnyAuthority(Role.SYS_ADMIN.toString(), Role.ADMIN.toString()))
-                        .authorizeHttpRequests(requests -> requests.requestMatchers(HttpMethod.GET,"/recipes/tags/**").hasAnyAuthority(Role.SYS_ADMIN.toString(), Role.ADMIN.toString()))
-                        .authorizeHttpRequests(requests -> requests.requestMatchers(HttpMethod.GET,"/recipes/mealtypes/**").hasAnyAuthority(Role.SYS_ADMIN.toString(), Role.ADMIN.toString()))
+                        .authorizeHttpRequests(requests -> requests.requestMatchers(HttpMethod.GET,"/recipes").permitAll())
+                        .authorizeHttpRequests(requests -> requests.requestMatchers(HttpMethod.GET,"/recipes/**").permitAll())
+                        .authorizeHttpRequests(requests -> requests.requestMatchers(HttpMethod.GET,"/recipes/tags/**").permitAll())
+                        .authorizeHttpRequests(requests -> requests.requestMatchers(HttpMethod.GET,"/recipes/mealtypes/**").permitAll())
                         .authorizeHttpRequests(requests -> requests.requestMatchers(HttpMethod.POST,"/recipes").hasAnyAuthority(Role.SYS_ADMIN.toString()))
                         .authorizeHttpRequests(requests -> requests.requestMatchers(HttpMethod.PUT, "/recipes/**").hasAnyAuthority(Role.SYS_ADMIN.toString()))
                         .authorizeHttpRequests(requests -> requests.requestMatchers(HttpMethod.DELETE,"/recipes/**").hasAnyAuthority(Role.SYS_ADMIN.toString()))
 
-                        .authorizeHttpRequests(requests -> requests.requestMatchers(HttpMethod.GET,"/tags").hasAnyAuthority(Role.SYS_ADMIN.toString(), Role.ADMIN.toString()))
-                        .authorizeHttpRequests(requests -> requests.requestMatchers(HttpMethod.GET,"/tags/**").hasAnyAuthority(Role.SYS_ADMIN.toString(), Role.ADMIN.toString()))
+                        // .authorizeHttpRequests(requests -> requests.requestMatchers(HttpMethod.GET,"/tags").hasAnyAuthority(Role.SYS_ADMIN.toString(), Role.ADMIN.toString()))
+                        .authorizeHttpRequests(requests -> requests.requestMatchers(HttpMethod.GET,"/tags").permitAll())
+                        .authorizeHttpRequests(requests -> requests.requestMatchers(HttpMethod.GET,"/tags/**").permitAll())
 
-                        .authorizeHttpRequests(requests -> requests.requestMatchers(HttpMethod.GET,"/mealtypes").hasAnyAuthority(Role.SYS_ADMIN.toString(), Role.ADMIN.toString()))
-                        .authorizeHttpRequests(requests -> requests.requestMatchers(HttpMethod.GET,"/mealtypes/**").hasAnyAuthority(Role.SYS_ADMIN.toString(), Role.ADMIN.toString()))
+                        .authorizeHttpRequests(requests -> requests.requestMatchers(HttpMethod.GET,"/mealtypes").permitAll())
+                        .authorizeHttpRequests(requests -> requests.requestMatchers(HttpMethod.GET,"/mealtypes/**").permitAll())
                         .authenticationProvider(authenticationProvider())
                         .build();
 
@@ -63,20 +65,20 @@ public class SecurityConfig {
     }
 
     @Bean
-	public AuthenticationProvider authenticationProvider() { 
-		DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider(); 
-		authenticationProvider.setUserDetailsService(userDetailsService()); 
-		authenticationProvider.setPasswordEncoder(passwordEncoder()); 
-		return authenticationProvider; 
-	} 
-
-	@Bean
-	public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception { 
-		return config.getAuthenticationManager(); 
-	}
+    public AuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+        authenticationProvider.setUserDetailsService(userDetailsService());
+        authenticationProvider.setPasswordEncoder(passwordEncoder());
+        return authenticationProvider;
+    }
 
     @Bean
-	public static PasswordEncoder passwordEncoder() { 
-		return new BCryptPasswordEncoder(); 
-	} 
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager();
+    }
+
+    @Bean
+    public static PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 }

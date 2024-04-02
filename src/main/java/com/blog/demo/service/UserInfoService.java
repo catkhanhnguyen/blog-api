@@ -120,4 +120,15 @@ public class UserInfoService implements UserDetailsService{
         return this.jwtProvider.getAuthentication(token);
     }
 
+    public TokenModel refreshToken(TokenModel request){
+		if(request.getAccessToken() == null || request.getAccessToken().isBlank()) throw new BadRequestException(Constants.MESSAGE_INVALID_ACCESS_TOKEN);
+		if(request.getRefreshToken() == null || request.getRefreshToken().isBlank()) throw new BadRequestException(Constants.MESSAGE_INVALID_REFRESH_TOKEN);
+
+		UserInfo userInfo = userRepo.findByUsername(extractUsername(request.getRefreshToken()));
+		if(userInfo.getRefreshToken().compareTo(request.getRefreshToken()) != 0) throw new BadRequestException(Constants.MESSAGE_INVALID_REFRESH_TOKEN);
+
+		String accessToken = jwtProvider.generateToken(userInfo.getUsername(), userInfo.getRoles(), Constants.ACCESS_TOKEN_EXPIRATION_MINUTES);
+		return new TokenModel(accessToken, userInfo.getRefreshToken());
+	}
+
 }

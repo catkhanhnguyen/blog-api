@@ -1,7 +1,6 @@
 package com.blog.demo.model;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,9 +36,6 @@ public class UserInfo{
 
     @Column(name = "refresh_token")
     private String refreshToken;
-
-    @Column(name = "refresh_token_expiry_time")
-    private Date refreshTokenExpiryTime;
 
     @ElementCollection(fetch = FetchType.EAGER)
     private List<Role> roles;

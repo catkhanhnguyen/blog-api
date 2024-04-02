@@ -5,6 +5,9 @@ public class Constants {
     public static final long REFRESH_TOKEN_EXPIRATION_MINUTES = 300;
     public static final long ACCESS_TOKEN_EXPIRATION_MINUTES = 10;
 
+    public static final String MESSAGE_INVALID_ACCESS_TOKEN = "access token is invalid.";
+    public static final String MESSAGE_INVALID_REFRESH_TOKEN = "request token is invalid.";
+
     public static final String MESSAGE_INVALID_USER_NAME = "user name is invalid.";
     public static final String MESSAGE_INVALID_PASSWORD = "password is invalid.";
     public static final String MESSAGE_INVALID_ROLES = "roles is invalid.";

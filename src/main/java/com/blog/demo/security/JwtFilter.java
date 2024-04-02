@@ -1,7 +1,5 @@
 package com.blog.demo.security;
 
-import java.util.Arrays;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -26,7 +24,7 @@ import jakarta.servlet.http.HttpServletResponse;
 public class JwtFilter extends OncePerRequestFilter{
 
     private final String[] ignoreCsrfAntMatchers = {
-        "/login"
+        "/login", "/recipes", "/recipes/**", "/recipes/tags/**", "/recipes/mealtypes/**", "/tags", "/tags/**", "/mealtypes", "/mealtypes/**", "/refresh-token", "register"
     };
 
     public String[] getIgnoreCsrfAntMatchers(){
@@ -70,7 +68,11 @@ public class JwtFilter extends OncePerRequestFilter{
     }
 
     private boolean isPyPassToken(HttpServletRequest request) {
-        return Arrays.binarySearch(getIgnoreCsrfAntMatchers(), request.getServletPath()) >= 0;
+        String[] antMatchers = getIgnoreCsrfAntMatchers();
+        for (String antMatcher : antMatchers) {
+            if(antMatcher.equalsIgnoreCase(antMatcher)) return true;
+        }
+        return false;
     }
 
     private void sendErrorResponse(HttpServletResponse httpServletResponse, CustomException e) throws java.io.IOException {

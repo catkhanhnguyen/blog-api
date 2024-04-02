@@ -33,8 +33,8 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(service.login(request));
     }
 
-    // @PostMapping("/refresh-token")
-    // public ResponseEntity<TokenModel> refreshToken(@RequestBody TokenModel request){
-    //     return ResponseEntity.status(HttpStatus.OK).body(service.refreshToken(request));
-    // }
+    @PostMapping("/refresh-token")
+    public ResponseEntity<TokenModel> refreshToken(@RequestBody TokenModel request){
+        return ResponseEntity.status(HttpStatus.OK).body(service.refreshToken(request));
+    }
 }
